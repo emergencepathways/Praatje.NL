@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Batch 06: 500 words, dictionary now covers 90.5% of the game's Dutch text.
 - Batch 05: 500 words, dictionary now covers 89.1% of the game's Dutch text.
 - Batch 04: 500 words, dictionary now covers 87.2% of the game's Dutch text.
 - Batch 03: 500 words, dictionary now covers 84.6% of the game's Dutch text.
