@@ -4,3 +4,4 @@ work/
 dist/
 *.user
 .vs/
+__pycache__/
