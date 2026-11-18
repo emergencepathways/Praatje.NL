@@ -1,0 +1,27 @@
+{
+  "batch": 28,
+  "words": {
+    "vergissen": ["vergissen", "to be mistaken"],
+    "beheksen": ["beheksen", "to bewitch"],
+    "hieronder": ["hieronder", "below"],
+    "dorpelingen": ["dorpeling", "villagers"],
+    "sterfelijke": ["sterfelijk", "mortal"],
+    "waterrekening": ["waterrekening", "water bill"],
+    "lager": ["laag", "lower"],
+    "uitvallen": ["uitvallen", "to fail; to drop out"],
+    "gewichtheffen": ["gewichtheffen", "weightlifting"],
+    "waardeloze": ["waardeloos", "worthless"],
+    "druppelen": ["druppelen", "to drip"],
+    "overstroomt": ["overstromen", "floods"],
+    "binnenkwam": ["binnenkomen", "came in"],
+    "gedweild": ["dweilen", "mopped"],
+    "dempt": ["dempen", "muffles"],
+    "misthoorn": ["misthoorn", "foghorn"],
+    "echoën": ["echoën", "to echo"],
+    "communiceren": ["communiceren", "to communicate"],
+    "bekende": ["bekend", "known, familiar; acquaintance"],
+    "eigenzinnig": ["eigenzinnig", "headstrong"]
+  },
+  "names": [],
+  "skip": []
+}
