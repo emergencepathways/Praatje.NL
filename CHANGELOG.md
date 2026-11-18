@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Batch 03: 500 words, dictionary now covers 84.6% of the game's Dutch text.
 
 ## 0.1.0 — 2026-11-18
 - First version: reader panel with clickable Dutch words for dialogue, cutscenes, answer choices, letters and notes.
