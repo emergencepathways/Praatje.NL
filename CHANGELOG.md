@@ -1,0 +1,11 @@
+# Changelog
+
+## Unreleased
+
+## 0.1.0 — 2026-11-18
+- First version: reader panel with clickable Dutch words for dialogue, cutscenes, answer choices, letters and notes.
+- Original English column (+ EN), read from the game's own content files.
+- Word list "Mijn woorden" with meaning, sentence and source; right-click to remove.
+- Straight to Anki through AnkiConnect, sharing Speurtocht.NL's deck and note type; .txt export and clipboard copy.
+- Dictionary batches 1–2: 939 word forms and 40 names, 80.6% of the game's Dutch text. Spelling rules for plurals,
+  diminutives and verb forms; Wiktionary lookup for the rest.

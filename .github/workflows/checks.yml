@@ -1,0 +1,21 @@
+name: Checks
+on:
+  push:
+  pull_request:
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Dictionary batches
+        run: |
+          python3 tools/import_batch.py
+          git diff --exit-code Praatje/assets/dictionary.json || (echo "dictionary.json is out of date: run python3 tools/import_batch.py and commit it" && exit 1)
+      - name: Offline tests
+        run: dotnet run --project tests/Praatje.Tests

@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Praatje.NL - SMAPI mod. Builds against your own Stardew Valley install.
+
+      dotnet build Praatje -c Release                      (uses GamePath below)
+      dotnet build Praatje -c Release -p:GamePath="/path/to/Stardew Valley"
+
+    OfflineRuntime=true compiles against the game's own .NET runtime files instead of the
+    .NET 6 targeting pack (for build machines without NuGet access). See CLAUDE.md.
+  -->
+  <PropertyGroup>
+    <AssemblyName>PraatjeNL</AssemblyName>
+    <RootNamespace>PraatjeNL</RootNamespace>
+    <Version>0.1.0</Version>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <GamePath Condition="'$(GamePath)' == '' And Exists('$(HOME)/.local/share/Steam/steamapps/common/Stardew Valley')">$(HOME)/.local/share/Steam/steamapps/common/Stardew Valley</GamePath>
+    <GamePath Condition="'$(GamePath)' == '' And Exists('$(HOME)/.steam/steam/steamapps/common/Stardew Valley')">$(HOME)/.steam/steam/steamapps/common/Stardew Valley</GamePath>
+    <GamePath Condition="'$(GamePath)' == '' And Exists('C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley')">C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley</GamePath>
+    <GamePath Condition="'$(GamePath)' == '' And Exists('$(HOME)/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS')">$(HOME)/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS</GamePath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OfflineRuntime)' == 'true'">
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <NoStdLib>true</NoStdLib>
+    <NoCompilerStandardLib>true</NoCompilerStandardLib>
+    <DisableTransitiveFrameworkReferences>true</DisableTransitiveFrameworkReferences>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <RuntimeRefPath Condition="'$(RuntimeRefPath)' == ''">$(GamePath)</RuntimeRefPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Stardew Valley"><HintPath>$(GamePath)/Stardew Valley.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="StardewValley.GameData"><HintPath>$(GamePath)/StardewValley.GameData.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="StardewModdingAPI"><HintPath>$(GamePath)/StardewModdingAPI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MonoGame.Framework"><HintPath>$(GamePath)/MonoGame.Framework.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="xTile"><HintPath>$(GamePath)/xTile.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="SMAPI.Toolkit.CoreInterfaces"><HintPath>$(GamePath)/smapi-internal/SMAPI.Toolkit.CoreInterfaces.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(OfflineRuntime)' == 'true'">
+    <Reference Include="$(RuntimeRefPath)/System*.dll" Private="false" />
+    <Reference Include="$(RuntimeRefPath)/netstandard.dll" Private="false" />
+    <Reference Include="$(RuntimeRefPath)/mscorlib.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="manifest.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="assets/**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
