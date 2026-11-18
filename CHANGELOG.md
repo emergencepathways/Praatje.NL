@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+
+## 0.1.1
+- Fixed: clicking a word (or a button) in the reader panel no longer advances the dialogue. The click stays hidden from the game until the mouse button is released.
+- Dictionary complete: batches 24-28 give every word in the Dutch translation an English meaning.
 - Batch 28: 20 words, dictionary now covers 100.0% of the game's Dutch text.
 - Batch 27: 500 words, dictionary now covers 100.0% of the game's Dutch text.
 - Batch 26: 500 words, dictionary now covers 99.7% of the game's Dutch text.

@@ -50,6 +50,9 @@ namespace PraatjeNL
         private bool readerOn = true;
         private bool readerClosedForThisText;
         private IClickableMenu? lastMenu;
+
+        /// <summary>Mouse buttons pressed on one of our panels; hidden from the game until they are released.</summary>
+        private readonly HashSet<SButton> heldOnPanel = new();
         private string status = "";
         private DateTime statusUntil;
 
@@ -69,6 +72,7 @@ namespace PraatjeNL
             this.Reader = new ReaderPanel(this);
             this.WordList = new WordListPanel(this);
 
+            helper.Events.GameLoop.UpdateTicking += this.OnUpdateTicking;
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
             helper.Events.GameLoop.DayStarted += (_, _) => this.CollectNames();
             helper.Events.GameLoop.SaveLoaded += (_, _) => this.OnSaveLoaded();
@@ -389,6 +393,38 @@ namespace PraatjeNL
                 this.readerClosedForThisText = false;
         }
 
+        /// <summary>
+        /// SMAPI only hides a suppressed button from the game for the tick it was pressed. The game compares this tick's
+        /// mouse with last tick's, so a button still held on the next tick looks like a fresh click and advances the
+        /// dialogue. Keep suppressing a click that started on our panel until the player lets go.
+        /// </summary>
+        private void OnUpdateTicking(object? sender, UpdateTickingEventArgs e)
+        {
+            if (this.heldOnPanel.Count == 0)
+                return;
+            MouseState mouse = Mouse.GetState();
+            foreach (SButton button in this.heldOnPanel.ToList())
+            {
+                bool down = button == SButton.MouseLeft ? mouse.LeftButton == ButtonState.Pressed
+                    : button == SButton.MouseRight ? mouse.RightButton == ButtonState.Pressed
+                    : this.Helper.Input.IsDown(button);
+                if (down)
+                {
+                    this.Helper.Input.Suppress(button);
+                    HoldDialogue();
+                }
+                else
+                    this.heldOnPanel.Remove(button);
+            }
+        }
+
+        /// <summary>Backup: a dialogue box ignores clicks while its safety timer runs.</summary>
+        private static void HoldDialogue()
+        {
+            if (Game1.activeClickableMenu is DialogueBox box && box.safetyTimer < 250)
+                box.safetyTimer = 250;
+        }
+
         private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
         {
             while (this.mainThread.TryDequeue(out Action? action))
@@ -481,7 +517,11 @@ namespace PraatjeNL
             if (!handled && this.ReaderVisible)
                 handled = this.Reader.Click(x, y, right);
             if (handled)
+            {
                 this.Helper.Input.Suppress(e.Button);
+                this.heldOnPanel.Add(e.Button);
+                HoldDialogue();
+            }
         }
 
         private void OnMouseWheelScrolled(object? sender, MouseWheelScrolledEventArgs e)

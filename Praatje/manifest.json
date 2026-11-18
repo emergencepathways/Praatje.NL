@@ -1,7 +1,7 @@
 {
   "Name": "Praatje.NL",
   "Author": "Emergence Pathways",
-  "Version": "0.1.0",
+  "Version": "0.1.1",
   "Description": "Klik op Nederlandse woorden in gesprekken en brieven: betekenis, woordenlijst en Anki. Click Dutch words in dialogue and letters for their meaning; save them to a word list and Anki.",
   "UniqueID": "EmergencePathways.PraatjeNL",
   "EntryDll": "PraatjeNL.dll",
